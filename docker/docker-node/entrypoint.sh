@@ -12,3 +12,4 @@ ip link set tun9 up
 
 
 exec /app/bin/ph node -c /conf/node-conf.toml
+# -l all=DEBUG

@@ -83,8 +83,9 @@ The docker image starts three containers:
 - BAS plus adapter
 
 The node exposes its docking port on the host OS at port `65000`. The config
-files for the "cli", "admin", and "web" adapters (all in the `authority/`
+files for the "cli" (*client*), "admin", and "web" adapters (all in the `release/conf`
 directory) are setup with the `node_addr` set to `127.0.0.1:65000` -- that is
+<!-- FIXME -->
 correct only if connecting from the host OS. Connecting from a VM or whereever
 will require overriding that value.
 

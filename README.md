@@ -22,9 +22,11 @@ files.
 
 # Demo overview
 
-## What it does
+## The pieces that will run
 
-...
+## Policy
+
+The policy source is in `demo.zpl`. Accompanying it is the policy configuration, `demo.zplc`. You may wish to study these to understand...
 
 ## Requirements
 
@@ -288,7 +290,7 @@ visa-service  | 2025-11-19T17:23:57.841Z        info    visa denied, dest actor 
 
 Most other documentation, and source code, is not public yet. However, the following is available now:
 
-- [ZPLC - ZPL Configuration](https://github.com/org-zpr/zpr-compiler/blob/main/README_ZPLC.md)
+- [ZPLC - ZPL Configuration](https://github.com/org-zpr/zpr-compiler/blob/main/README_ZPLC.md). Describes .zplc files.
 
 - Each binary in the [zpr-demo release](https://github.com/org-zpr/zpr-demo/releases) tarball outputs usage information with the `--help` option, and for subcommands as applicable.
 	- **`ph`**

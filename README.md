@@ -12,17 +12,33 @@ The rest of this file is about running the demo.  If you need to build a new rel
 
 The latest release will be here in `main` and in a branch named `demo-YYYYMMDD`.
 
-The demo consists of a container image, some binaries and some configuration
-files.
+The demo consists of a container image, some binaries, and some files in this repo.
 
-- The container image can be downloaded from GHCR in the [org-zpr packages area](https://github.com/orgs/org-zpr/packages/container/package/zpr-demo%2Fzprdemo).
+- The container image can be downloaded from GHCR in the [packages area](https://github.com/orgs/org-zpr/packages/container/package/zpr-demo%2Fzprdemo).
 - The release binaries are in the [releases area](https://github.com/org-zpr/zpr-demo/releases).
-- The configuration files are in the repo in [release/conf](https://github.com/org-zpr/zpr-demo/tree/main/release/conf).
+- This git repo itself, [especially the configuration files in [release/conf](https://github.com/org-zpr/zpr-demo/tree/main/release/conf).
 
 
 # Demo overview
 
 ## The pieces that will run
+
+...
+BAS (is:)
+
+Visa Service
+
+Node
+
+...
+
+## Network description
+
+ZPR addresses are IPv6 addresses beginning with `fd5a:5052`. Whenever you connect by running an ***adapter*** with the `ph adapter` command, this creates a TUN virtual network interface and creates a routing table entry so that traffic for this prefix goes into the TUN. 
+
+The ***substrate*** is the underlying IP network which "physically" connects an adapter to a ***node*** (or, one node to another node). An adapter has to be configured to know the node's IP address and port number on the substrate network (i.e., the ordinary network) so it can connect to it and tunnel traffic. This is called the node's ***docking port***.
+
+In this demo, the Docker Compose file defines a Docker network called `substrate`, which each container (`node`, `bas`, `visa-service`) is attached to. Additionally, the Docker Compose file exposes port 5000/udp of the node container, which is the node's docking port, as port 65000/udp *of the host machine*. This makes it possible for adapters on other machines or VMs to connect to the node.
 
 ## Policy
 
@@ -33,7 +49,7 @@ The policy source is in `demo.zpl`. Accompanying it is the policy configuration,
 - x86_64 only.
 	- Not ARM (Apple, Pi, etc.) — even with `binfmt` (qemu or Rosetta). 
 - Linux as host OS. You must have root privileges.
-	- The docker containers run with extra privileges to manipulate network interfaces on the host. Docker on other OSes runs containers in a VM, so this won't work.
+	- The docker containers run with extra privileges to manipulate network interfaces. Docker on other OSes runs containers in a VM, so this won't work.
 - A recent Linux distribution.
 	- Ubuntu 24.04 or later; Debian 13 "trixie"; RHEL or Oracle Linux 10.0.
 	- Specifically, glibc 2.39 or later.
@@ -47,7 +63,7 @@ Running the services on separate physical machines, or in other VM setups, is be
 
 To run the demo you need three things:
 
-1. The docker container.
+1. The docker image.
 2. The release configuration.
 3. The release binaries.
 
@@ -167,7 +183,7 @@ Just replace `actors` with `gui` in the above line to try it out.
 
 #### Attempt to access Web from Admin
 
-Connected as the admin adapter you cannot access the web service.
+Connected as the admin adapter you cannot access the web service. Refer to the ZPL, `demo.zpl`, to understand why: the policy does not allow it! 
 So, for example, this will fail:
 
 ```bash
